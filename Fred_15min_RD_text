@@ -1,0 +1,50 @@
+CentOS Router									   Fred Fritchie
+15 Minute Plan
+ 
+o	Ensure everyone operating a host has their IP
+o	Change password for (/usr/bin/passwd)
+    o	User
+    o	Root
+o	Internal interface:
+    o	Eth1 – 192.168.t.1
+o	External interface:
+    o	Eth0 – 172.18.13.t
+o	Check connectivity to each host:
+    o	192.168.t.5
+    o	192.168.t.5
+    o	192.168.t.5
+    o	192.168.t.5
+    o	Ext 172.18.0.1
+    o	Ext 172.18.14.t
+o	Forward ports:
+    o	80 – 192.168.t.5
+    o	443 – 192.168.t.5
+    o	3306 – 192.168.t.7
+    o	53 – 192.168.t.12
+o	Check running services
+o	Check enabled users
+o	Login shell
+o	Home directory
+o	Permissions
+o	Groups ( getent group [NAME] )
+
+Set Static IP
+-	Sudo vi /etc/sysconfig/network-scripts/ifcfg-[INT]
+Change:
+BOOTPROTO=static | ONBOOT=yes
+Add:
+IPADDR=[IP] | NETMASK=[SM]
+-	sudo systemctl restart network
+Change Zone
+sudo firewall-cmd --change-interface=[INT] --zone=[ZONE] --permanent
+Port Forwarding
+sudo firewall-cmd --zone=[Z] --add-forward-port=port=[PORT]:proto=tcp:toport=[PORT]:toaddr=[IP] --permanent
+Commands
+Change password: /usr/bin/passwd
+firewall-cmd 
+•	--list-all-zones
+•	--list-all --zone=[Z]
+•	--reload
+•	--zone=[Z] --permanent --(remove/add)-service=[SERVICE]
+Note: forward rules take precedence over service running on the interface
+
